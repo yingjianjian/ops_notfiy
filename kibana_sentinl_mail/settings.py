@@ -126,14 +126,14 @@ EMAIL_PORT = os.environ('EMAIL_PORT') if "EMAIL_PORT" in os.environ else 465
 EMAIL_HOST_USER = os.environ("EMAIL_HOST_USER") if "EMAIL_HOST_USER" in os.environ else 'devops@qq.com'
 EMAIL_HOST_PASSWORD = os.environ("EMAIL_HOST_PASSWORD") if "EMAIL_HOST_PASSWORD" in os.environ else 'password'
 EMAIL_USE_SSL = os.environ("EMAIL_USE_SSL") if "EMAIL_USE_SSL" in os.environ else True
-EMAIL_FROM = os.environ("EMAIL_FROM") if "EMAIL_FROM" in os.environ else 'devops@isyscore.com'
+EMAIL_FROM = os.environ("EMAIL_FROM") if "EMAIL_FROM" in os.environ else 'devops@qq.com'
 KIBANA_URL = os.environ("KIBANA_URL") if "KIBANA_URL" in os.environ else 'http://10.30.30.241:15601'
 KIBANA_DATE_TIME = os.environ("KIBANA_DATE_TIME") if "KIBANA_DATE_TIME" in os.environ else 'now-1h'
 
 
 EMAIL_TO = {
 	"[isclink-gateway-proxy-run-service]": {
-		"username": "username",
+		"username": "测试",
 		"mailto": ["yingjj@qq.com"]
 	},
 	"other": {

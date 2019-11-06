@@ -1,0 +1,89 @@
+{
+  "actions": {
+    "Webhook_86ccf137-5981-402e-bb04-a3d7b1ea6fa6": {
+      "name": "Webhook",
+      "webhook": {
+        "priority": "high",
+        "stateless": false,
+        "method": "POST",
+        "host": "192.168.10.190",
+        "port": "8002",
+        "path": "/api/logs/mail/error_logs_notify",
+        "body": "[{{#payload.results}}{\"appName\": \"{{appName}}\", \"errors\": [{{#errors}}{\"index\": \"{{index}}\",\"id\": \"{{id}}\", \"message\": \"{{message}}\"}{{#comma_e}},{{/comma_e}}{{/errors}}]}{{#comma_b}},{{/comma_b}}{{/payload.results}}]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "index": [
+          "isys*"
+        ],
+        "body": {
+          "query": {
+            "bool": {
+              "must": [
+                {
+                  "match": {
+                    "loglevel": "ERROR"
+                  }
+                },
+                {
+                  "range": {
+                    "@timestamp": {
+                      "gte": "now-10m",
+                      "lt": "now"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "aggs": {
+            "app_errors": {
+              "terms": {
+                "field": "appname.keyword"
+              },
+              "aggs": {
+                "errors": {
+                  "top_hits": {
+                    "size": 10,
+                    "_source": {
+                      "includes": [
+                        "message"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "condition": {
+    "script": {
+      "script": "payload.hits.total > 0"
+    }
+  },
+  "transform": {
+    "script": {
+      "script": "payload.results=[];payload.aggregations.app_errors.buckets.forEach(function(b,bi){var r={};r.appName=b.key;r.errors=[];if(bi!=payload.aggregations.app_errors.buckets.length-1){r.comma_b=true}b.errors.hits.hits.forEach(function(h,hi){var v={};v.id=h._id;v.index = h._index;v.message=escape(h._source.message);if(hi!=b.errors.hits.hits.length-1){v.comma_e=true}r.errors.push(v)});payload.results.push(r)})"
+    }
+  },
+  "trigger": {
+    "schedule": {
+      "later": "every 10 minutes"
+    }
+  },
+  "disable": false,
+  "report": false,
+  "title": "isyscore_error_watcher",
+  "save_payload": false,
+  "spy": false,
+  "impersonate": false
+}
