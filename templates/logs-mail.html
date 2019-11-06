@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>日志告警</title>
+    </head>
+    <body>
+        <table width="100%" cellpadding="0" cellspacing="0"
+               style="width:100%; border-collapse:collapse; border-spacing:0;font-family: '黑体'">
+            <tbody>
+                <tr>
+                    <td border="border" valign="top" style="padding:20px; word-break:break-word">
+
+                        <table width="100%" border="0" cellpadding="0" cellspacing="0"
+                               style="border:0;border-collapse:collapse; border-spacing:0;text-align:left;color:#666;background:#fff;border-bottom-width:1px;border-bottom-color:#ccc;border-bottom-style:solid">
+                            <tbody>
+                                <tr>
+                                    <td style="padding-top:10px;padding-bottom:10px">
+                                        <div>
+                                            <p style="color: #000;font-weight: normal;font-style: normal;font-family: '黑体';text-align:left;font-size: 16px">
+                                                亲爱的<span>{{ user }}</span>小伙伴:</p>
+                                        </div>
+                                        <div>
+                                            <p style="color: #000; font-weight: normal; font-style: normal; font-family: '黑体'; text-align:left; font-size: 14px"
+                                               >日志报错信息如下:</p>
+                                        </div>
+                                    <div>
+                                    <table style="background: cornsilk;border-bottom-width: 1px;border-bottom-style: solid;border-bottom-color: rgb(230, 189, 189);" border="1px">
+                                    <tr align="center">
+                                        <th>应用名称</th>
+                                        <th>日志内容</th>
+                                        <th>详情链接</th>
+                                    </tr>
+                                        {% for k,v in messages.items %}
+{#                                            <tr style="border-top-width: 1px;border-top-style: solid;border-top-color: rgb(230, 189, 189);">#}
+{#                                            <th rowspan=5 style="padding: 5px 10px;font-size: 12px;font-family: Verdana;color: rgb(177, 106, 104);">{{ k }}</th>#}
+{#                                            </tr>#}
+{#                                            <li style="background: cornsilk;width: auto; border: solid 1px; padding: 10px; color: #cc1111; font-weight: normal; font-style: normal; font-family: '黑体'; text-align:left; font-size: 14px">{{ k }}</li>#}
+                                            {% for ks in v %}
+                                                <tr  style="border-top-width: 1px;border-top-style: solid;border-top-color: rgb(230, 189, 189);">
+                                                <th  style="padding: 5px 10px;font-size: 12px;font-family: Verdana;color: rgb(177, 106, 104);">{{ k }}</th>
+                                                {% if ks.count > 150 %}
+{#                                                    <p style="background: cornsilk; border: solid 1px; padding: 10px; color: #000; font-weight: normal; font-style: normal; font-family: '黑体'; text-align:left; font-size: 14px">#}
+{#                                                        <span>{{ ks.bytesLimit }}</span>#}
+                                                    <th  style="padding: 5px 10px;font-size: 12px;font-family: Verdana;color: rgb(177, 106, 104);">{{ ks.bytesLimit }}</th>
+                                                    <th style="padding: 5px 10px;font-size: 12px;font-family: Verdana;color: rgb(177, 106, 104);"><a href={{ ks.httpRef }}>详情</a></th>
+                                                        {#                                                    <span>(<a th:href="${entry.getKey()}">点击查看详情</a>)</span>#}
+{#                                                    </p>#}
+                                                {% else %}
+{#                                                    <p style="background: cornsilk; border: solid 1px; padding: 10px; color: #000; font-weight: normal; font-style: normal; font-family: '黑体'; text-align:left; font-size: 14px;" >#}
+{#                                                        <span>{{ ks.message }}</span>#}
+                                                    <th style="padding: 5px 10px;font-size: 12px;font-family: Verdana;color: rgb(177, 106, 104);">{{ ks.message }}</th>
+                                                    <th style="padding: 5px 10px;font-size: 12px;font-family: Verdana;color: rgb(177, 106, 104);"><a href={{ ks.httpRef }}>详情</a></th>
+                                                        {#                                                    <span>(<a th:href="${entry.getKey()}">点击查看详情</a>)</span>#}
+{#                                                    </p>#}
+                                                {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </table>
+                                    </div>
+{#                                        {% for message in messages %}#}
+{#                                            <span>{{ message.appName }}</span>#}
+{#                                            {% for log in message.errors %}#}
+{#                                                <span>{{log.message}}</span>#}
+{#                                            {% endfor %}#}
+{#                                        {% endfor %}#}
+{#                                        {% for message in messages %}#}
+{#                                            <span>{% message.appName %}</span>#}
+{#                                            {% for log in message %}#}
+{#                                                <span>{% log.message %}</span>#}
+{#                                            {% endfor %}#}
+{#                                        {% endfor %}#}
+{#                                        <div>#}
+{#                                            <p style="background: cornsilk; border: solid 1px; padding: 10px; color: #000; font-weight: normal; font-style: normal; font-family: '黑体'; text-align:left; font-size: 14px">#}
+{#                                                <span th:text="${entry.getValue()}"></span>#}
+{#                                                <span>(<a th:href="${entry.getKey()}">点击查看详情</a>)</span>#}
+{#                                            </p>#}
+{#                                        </div>#}
+
+
+                                        <div>
+                                            <p style="color: #000; font-weight: normal; font-style: normal; font-family: '黑体'; text-align:left; font-size: 14px">
+                                                以上链接 1 周内有效，请你及时前往查看错误详情并处理相应问题，谢谢！
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 20px; padding-bottom: 20px">
+                                        <p style="color: #666; font-weight: normal; font-style: normal; font-family: '黑体'; text-align:left; font-size: 12px">
+                                            * 如对此告警信息有任何疑问，请联系运维组成员
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
