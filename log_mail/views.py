@@ -7,7 +7,7 @@ from django.core.mail  import  send_mail
 from django.core.mail import EmailMessage
 from django.template import loader
 from kibana_sentinl_mail.settings import EMAIL_HOST_USER,KIBANA_URL,KIBANA_DATE_TIME,EMAIL_TO
-from .util import kibana_mail
+from .util import kibana_mail,kibana_api
 class kibana_sentinal(View):
     def post(self,request):
         subject = u'日志报警系统'
@@ -21,7 +21,8 @@ class kibana_sentinal(View):
                 bytes = parse.unquote_to_bytes(Log)
                 bytes = bytes.decode('unicode-escape')
                 # httpRef = "%s/app/kibana#/discover?_g=(refreshInterval:(pause:!t,value:0),time:(from:%s,mode:quick,to:now))&_a=(columns:!(_source),index:'22595e70-fb92-11e9-8a18-2b708bc20a0c',interval:auto,query:(language:lucene,query:'_id:%s'),sort:!('@timestamp',desc))" %(KIBANA_URL,KIBANA_DATE_TIME,Logs['id'])
-                httpRef = "%s/app/kibana#/doc/22595e70-fb92-11e9-8a18-2b708bc20a0c/%s/fluentd?id=%s&_g=(refreshInterval:(pause:!t,value:0),time:(from:%s,mode:quick,to:now))" %(KIBANA_URL,Logs['index'],Logs['id'],KIBANA_DATE_TIME)
+                # httpRef = "%s/app/kibana#/doc/%s/%s/fluentd?id=%s&_g=(refreshInterval:(pause:!t,value:0),time:(from:%s,mode:quick,to:now))" %(KIBANA_URL,kibana_api.data,Logs['index'],Logs['id'],KIBANA_DATE_TIME)
+                httpRef = "%s/app/kibana#/context/%s/%s/%s?_a=(columns:!(_source),filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'4fa5af10-0429-11ea-9ef8-019832b3e032',key:appname,negate:!f,params:(query:%s,type:phrase),type:phrase,value:%s),query:(match:(appname:(query:%s,type:phrase))))),predecessorCount:5,sort:!('@timestamp',desc),successorCount:5)&_g=(refreshInterval:(pause:!t,value:0),time:(from:%s,mode:quick,to:now))" %(KIBANA_URL,kibana_api.data,Logs['type'],Logs['id'],AppLogs['appName'],AppLogs['appName'],AppLogs['appName'],KIBANA_DATE_TIME)
                 if len(bytes) > 150:
                     bytesLimit = bytes[0:150] + "......"
                     Errors.append({'message':bytes,'count':len(bytes),'bytesLimit':bytesLimit,'httpRef':httpRef})
