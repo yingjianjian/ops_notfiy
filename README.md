@@ -1,4 +1,4 @@
-"kibana_sentinl_mail" 
+"kibana-sentinl-mail" 
 
 使用kibana Sentinl webhook 实现日志报警功能
 
