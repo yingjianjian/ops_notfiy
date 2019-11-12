@@ -12,7 +12,9 @@ class kibana_sentinal(View):
     def post(self,request):
         subject = u'日志报警系统'
         mes = dict()
+        otherMes = dict()
         Errors = list()
+        Mails = dict()
         messages = json.loads(request.body.decode('utf-8'))
         for AppLogs in messages:
             AppName = AppLogs['appName']
@@ -28,18 +30,29 @@ class kibana_sentinal(View):
                     Errors.append({'message':bytes,'count':len(bytes),'bytesLimit':bytesLimit,'httpRef':httpRef})
                 else:
                     Errors.append({'message':bytes,'count':len(bytes),'httpRef':httpRef})
-            mes[AppName] = Errors
             if AppName in EMAIL_TO:
-                Mails = EMAIL_TO[AppName]
+                Mails[AppName] = EMAIL_TO[AppName]
+                mes[AppName] = Errors
+
+                if mes != {}:
+                    html_content = loader.render_to_string(
+                        'logs-mail.html', {
+                            'user': Mails[AppName]['username'],
+                            'messages': mes
+                        }
+                    )
+                    kibana_mail.send_html_mail(subject, html_content, Mails[AppName]['mailto'])
             else:
-                Mails = EMAIL_TO['other']
-            html_content = loader.render_to_string(
+                Mails['other'] = EMAIL_TO['other']
+                otherMes[AppName] = Errors
+        if otherMes != {}:
+            html_other_content = loader.render_to_string(
                 'logs-mail.html', {
-                    'user': Mails['username'],
-                    'messages': mes
+                    'user': Mails['other']['username'],
+                    'messages': otherMes
                 }
             )
-            kibana_mail.send_html_mail(subject,html_content,Mails['mailto'])
+            kibana_mail.send_html_mail(subject, html_other_content, Mails['other']['mailto'])
         code = {'code': 200}
         return HttpResponse(json.dumps(code), content_type="application/json")
 # Create your views here.
