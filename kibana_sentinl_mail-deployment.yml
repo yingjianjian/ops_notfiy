@@ -65,7 +65,7 @@ spec:
   ports:
   - name: webhook
     port: 8002
-    targetPort: web
+    targetPort: 8002
     nodePort: 8002
   selector:
     app: kibana-sentinl-mail
