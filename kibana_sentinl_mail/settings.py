@@ -123,22 +123,22 @@ STATIC_URL = '/static/'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ('EMAIL_HOST') if "EMAIL_HOST" in os.environ else 'smtp.exmail.qq.com'
 EMAIL_PORT = os.environ('EMAIL_PORT') if "EMAIL_PORT" in os.environ else 465
-EMAIL_HOST_USER = os.environ("EMAIL_HOST_USER") if "EMAIL_HOST_USER" in os.environ else 'devops@qq.com'
-EMAIL_HOST_PASSWORD = os.environ("EMAIL_HOST_PASSWORD") if "EMAIL_HOST_PASSWORD" in os.environ else 'password'
+EMAIL_HOST_USER = os.environ("EMAIL_HOST_USER") if "EMAIL_HOST_USER" in os.environ else 'devops@isyscore.com'
+EMAIL_HOST_PASSWORD = os.environ("EMAIL_HOST_PASSWORD") if "EMAIL_HOST_PASSWORD" in os.environ else '6KQKxrtL@E8FpkJ'
 EMAIL_USE_SSL = os.environ("EMAIL_USE_SSL") if "EMAIL_USE_SSL" in os.environ else True
-EMAIL_FROM = os.environ("EMAIL_FROM") if "EMAIL_FROM" in os.environ else 'devops@qq.com'
-KIBANA_URL = os.environ("KIBANA_URL") if "KIBANA_URL" in os.environ else 'http://10.30.30.241:15601'
-KIBANA_DATE_TIME = os.environ("KIBANA_DATE_TIME") if "KIBANA_DATE_TIME" in os.environ else 'now-1h'
+EMAIL_FROM = os.environ("EMAIL_FROM") if "EMAIL_FROM" in os.environ else 'devops@isyscore.com'
+KIBANA_URL = os.environ("KIBANA_URL") if "KIBANA_URL" in os.environ else 'http://10.30.30.25:15601'
+KIBANA_DATE_TIME = os.environ("KIBANA_DATE_TIME") if "KIBANA_DATE_TIME" in os.environ else 'now-10m'
 
 
 EMAIL_TO = {
 	"[isclink-gateway-proxy-run-service]": {
-		"username": "测试",
-		"mailto": ["yingjj@qq.com"]
+		"username": "应健健",
+		"mailto": ["yingjj@isyscore.com"]
 	},
 	"other": {
 		"username": "ops",
-		"mailto": ["devops@qq.com"]
+		"mailto": ["devops@isyscore.com"]
 	}
 }
 
