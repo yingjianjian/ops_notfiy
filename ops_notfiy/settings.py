@@ -145,5 +145,5 @@ EMAIL_TO = {
 
 
 #promethues notfiy
-PRO_URL = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=20de74df-fdcf-4a56-a410-990155f9bfe2"
-PRO_PROJECT = "益展大厦"
+PRO_URL = os.getenv("PRO_URL") if "PRO_URL" in os.environ else 'www.baidu.com'
+PRO_PROJECT = os.getenv("PRO_PROJECT") if "PRO_PROJECT" in os.environ else 'baidu'

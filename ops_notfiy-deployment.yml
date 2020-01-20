@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: kibana-sentinl-mail
+  name: ops-notfiy
   namespace: monitoring
 spec:
   replicas: 1
@@ -13,11 +13,11 @@ spec:
   template:
     metadata:
       labels:
-        app: kibana-sentinl-mail
+        app: ops-notfiy
     spec:
       containers:
-        - name: kibana-sentinl-mail
-          image: kibana-sentinl-mail:v0.0.1
+        - name: ops-notfiy
+          image: ops-notfiy:v0.0.1
           env:
           - name: EMAIL_HOST
             value: "smtp.exmail.qq.com"
@@ -35,6 +35,10 @@ spec:
             value: "http://10.30.30.25:15601"
           - name: KIBANA_DATE_TIME
             value: "now-10m"
+          - name: PRO_URL
+            value: "www.baidu.com"
+          - name: PRO_PROJECT
+            value: "test"
           ports:
             - containerPort: 8002
           livenessProbe:
@@ -58,7 +62,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kibana-sentinl-mail
+  name: ops-notfiy
   namespace: monitoring
 spec:
   type: NodePort
@@ -68,5 +72,5 @@ spec:
     targetPort: 8002
     nodePort: 8002
   selector:
-    app: kibana-sentinl-mail
+    app: ops-notfiy
   sessionAffinity: ClientIP
