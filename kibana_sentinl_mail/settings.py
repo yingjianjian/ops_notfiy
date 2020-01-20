@@ -123,8 +123,8 @@ STATIC_URL = '/static/'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST') if "EMAIL_HOST" in os.environ else 'smtp.exmail.qq.com'
 EMAIL_PORT = os.getenv('EMAIL_PORT') if "EMAIL_PORT" in os.environ else 465
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER") if "EMAIL_HOST_USER" in os.environ else 'default-email'
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD") if "EMAIL_HOST_PASSWORD" in os.environ else 'default-password'
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER") if "EMAIL_HOST_USER" in os.environ else 'devops@isyscore.com'
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD") if "EMAIL_HOST_PASSWORD" in os.environ else '6KQKxrtL@E8FpkJ'
 EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL") if "EMAIL_USE_SSL" in os.environ else True
 EMAIL_FROM = os.getenv("EMAIL_FROM") if "EMAIL_FROM" in os.environ else 'devops@isyscore.com'
 KIBANA_URL = os.getenv("KIBANA_URL") if "KIBANA_URL" in os.environ else 'http://10.30.30.25:15601'
@@ -132,16 +132,18 @@ KIBANA_DATE_TIME = os.getenv("KIBANA_DATE_TIME") if "KIBANA_DATE_TIME" in os.env
 
 
 EMAIL_TO = {
-	"[isclink-gateway-proxy-run-service]": {
-		"username": "yjj",
-		"mailto": ["yingjj@test.com"]
+	"[iscshow-run-service]": {
+		"username": "应健健",
+		"mailto": ["yingjj@isyscore.com"]
 	},
 	"other": {
 		"username": "ops",
-		"mailto": ["devops@test.com"]
+		"mailto": ["devops@isyscore.com"]
 	}
 }
-
 #kibana url
 
 
+#promethues notfiy
+PRO_URL = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=20de74df-fdcf-4a56-a410-990155f9bfe2"
+PRO_PROJECT = "益展大厦"

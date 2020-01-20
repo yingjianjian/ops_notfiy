@@ -18,5 +18,6 @@ from django.urls import path
 from django.conf.urls import url,include
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'api',include('log_mail.urls')),
+    url(r'api/log_mail',include('log_mail.urls')),
+    url(r'api/promethues',include('prometheus.urls'))
 ]
