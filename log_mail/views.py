@@ -6,8 +6,8 @@ from urllib import parse
 from django.core.mail  import  send_mail
 from django.core.mail import EmailMessage
 from django.template import loader
-from kibana_sentinl_mail.settings import EMAIL_HOST_USER,KIBANA_URL,KIBANA_DATE_TIME,EMAIL_TO
 from .util import kibana_mail,kibana_api
+from ops_notfiy.settings import EMAIL_HOST_USER,KIBANA_URL,KIBANA_DATE_TIME,EMAIL_TO
 class kibana_sentinal(View):
     def post(self,request):
         subject = u'日志报警系统'

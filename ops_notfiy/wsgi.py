@@ -1,5 +1,5 @@
 """
-WSGI config for kibana_sentinl_mail project.
+WSGI config for ops_notfiy project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kibana_sentinl_mail.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ops_notfiy.settings')
 
 application = get_wsgi_application()

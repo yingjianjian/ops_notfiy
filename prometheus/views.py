@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from . import util
 import requests
 import datetime
-from kibana_sentinl_mail.settings import PRO_PROJECT,PRO_URL
+from ops_notfiy.settings import PRO_PROJECT,PRO_URL
 # Create your views here.
 
 class prometheusWebhook(View):
