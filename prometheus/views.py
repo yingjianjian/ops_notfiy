@@ -89,11 +89,20 @@ class prometheusWebhook(View):
             req = requests.post(url,json=dict)
             # response = requEst.urlopen(req)
             # print(response)
-            if userList != []:
+            if userList != [] and alert['status'] == "<font color='error'>`报警中`</font>":
                 text = {
                     "msgtype": "text",
                     "text": {
                         "content": "%s出现报警 请查看！" % (alert['project']),
+                        "mentioned_list": ["@all"]
+                    }
+                }
+                requests.post(url, json=text)
+            else:
+                text = {
+                    "msgtype": "text",
+                    "text": {
+                        "content": "%s报警解除" % (alert['project']),
                         "mentioned_list": ["@all"]
                     }
                 }
