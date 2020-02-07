@@ -98,7 +98,7 @@ class prometheusWebhook(View):
                     }
                 }
                 requests.post(url, json=text)
-            else:
+            elif userList != [] and  alert['status'] == "<font color='info'>`已解决`</font>":
                 text = {
                     "msgtype": "text",
                     "text": {
