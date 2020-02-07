@@ -30,8 +30,10 @@ class prometheusWebhook(View):
         for alert in alerts:
             if alert['labels']['alertname'] == 'Watchdog':
                 url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=20de74df-fdcf-4a56-a410-990155f9bfe2'
+                userList = []
             else:
                 url = PRO_URL
+                userList = ["@all"]
             if alert['status'] == 'resolved':
                 alert['status'] = "<font color='info'>`已解决`</font>"
                 alert['project'] = PRO_PROJECT
@@ -87,7 +89,8 @@ class prometheusWebhook(View):
                 "markdown": {
                     "content": content
                 },
-                "enable_duplicate_check": 0
+                "enable_duplicate_check": 0,
+                "mentioned_list": userList
             }
             print(dict)
             # data = bytes(parse.urlencode(dict), encoding='utf-8')
