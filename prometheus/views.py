@@ -78,24 +78,25 @@ class prometheusWebhook(View):
 
 %s
                 """%(alert['status'],alert['project'],util.rep_str(alert['labels']),util.rep_str(alert['annotations']),self.__india_to_local(alert['startsAt'][:-4]+'Z'))
-            # print(content)
-            print(alert['startsAt'][:-4]+'Z')
             dict = {
-                "touser": "UserID1|UserID2|UserID3",
-                "toparty": "PartyID1|PartyID2",
-                "totag": "TagID1 | TagID2",
                 "msgtype": "markdown",
-                "agentid": 1,
                 "markdown": {
                     "content": content
-                },
-                "enable_duplicate_check": 0,
-                "mentioned_list": userList
+                }
             }
-            print(dict)
+
             # data = bytes(parse.urlencode(dict), encoding='utf-8')
             req = requests.post(url,json=dict)
             # response = requEst.urlopen(req)
             # print(response)
+            if userList != []:
+                text = {
+                    "msgtype": "text",
+                    "text": {
+                        "content": "%s出现报警 请查看！" % (alert['project']),
+                        "mentioned_list": ["@all"]
+                    }
+                }
+                requests.post(url, json=text)
         code = {'code': 200}
         return HttpResponse(json.dumps(code), content_type="application/json")
