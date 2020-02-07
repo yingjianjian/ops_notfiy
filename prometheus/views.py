@@ -20,13 +20,18 @@ class prometheusWebhook(View):
         messages = json.loads(request.body.decode('utf-8'))
         status = messages['status']
         alerts = messages['alerts']
-        url = PRO_URL
+
+
         headers = {
             'User-Agent': 'Mozilla/5.0 (compatible; MSIE 5.5; Windows NT)',
             'Content-Type': 'application/json',
         }  # 定义头信息
 
         for alert in alerts:
+            if alert['labels']['alertname'] == 'Watchdog':
+                url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=20de74df-fdcf-4a56-a410-990155f9bfe2'
+            else:
+                url = PRO_URL
             if alert['status'] == 'resolved':
                 alert['status'] = "<font color='info'>`已解决`</font>"
                 alert['project'] = PRO_PROJECT
